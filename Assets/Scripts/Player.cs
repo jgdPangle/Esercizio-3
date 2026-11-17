@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
     Vector3 targetPosition;
 
     float distance;
-    float tSpostamento;
+    float movementProgress;
     bool isMoving = false;
 
     void Awake()
@@ -117,10 +117,10 @@ public class Player : MonoBehaviour
         // Durante la schivata, lo spostamento viene gestito tramite interpolazione
         else
         {
-            tSpostamento += speed * Time.deltaTime / distance;
-            transform.position = Vector3.Lerp(startPosition, targetPosition, tSpostamento);
+            movementProgress += speed * Time.deltaTime / distance;
+            transform.position = Vector3.Lerp(startPosition, targetPosition, movementProgress);
 
-            if (tSpostamento >= 1)
+            if (movementProgress >= 1)
             {
                 isMoving = false;
             }
@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
 
         targetPosition = startPosition + dodgeDirection * distanceDodge; // Imposta la distanza per la schivata
 
-        tSpostamento = 0;
+        movementProgress = 0;
         isMoving = true;
     }
 

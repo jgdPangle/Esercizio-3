@@ -130,7 +130,7 @@ public class Orc : Enemies
             }
 
             // Attende 3 secondi prima del controllo successivo
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
