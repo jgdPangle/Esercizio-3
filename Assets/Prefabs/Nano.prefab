@@ -154,7 +154,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nano
   life: 0
-  _life: 0
   lifeMax: 200
   lifeMin: 0
   armor: 30
@@ -163,11 +162,9 @@ MonoBehaviour:
   damageReceived: 0
   canSpeak: 1
   dead: 0
-  suspendendAttacK: 0
   target:
-  - {fileID: 4371523381354654900, guid: 5879d7890d431c246930c5fb20f876e3, type: 3}
-  - {fileID: 5326550134413026883, guid: 77391c51e06ba9d47a9c883d182170a1, type: 3}
-  myPosition: {x: 0, y: 0, z: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   npcs: {fileID: 0}
   skeletons: {fileID: 7244184528025238264, guid: 5879d7890d431c246930c5fb20f876e3, type: 3}
   orc: {fileID: 8837621973649045064, guid: 77391c51e06ba9d47a9c883d182170a1, type: 3}

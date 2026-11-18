@@ -1,15 +1,12 @@
-
 using UnityEngine;
 
 public class Skeletons : Enemies
 {
     [SerializeField]
     float speed, distance, minimumDistance;
-    public int skeletonDefeatedCount;
     public bool defeatedSkeletons;
 
     NPCs npcs;
-    Player player;
 
     // Inizializzazione delle caratteristiche dello scheletro
     protected override void Start()
@@ -58,7 +55,6 @@ public class Skeletons : Enemies
     // Imposta il giocatore come bersaglio dello scheletro
     public void SetTargetMovement(Player targetMovement)
     {
-        player = targetMovement;
         target = targetMovement.gameObject;
     }
 

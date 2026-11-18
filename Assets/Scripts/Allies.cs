@@ -1,21 +1,16 @@
-
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class Allies : MonoBehaviour
 {
-    public float life, _life, lifeMax, lifeMin, armor, attackRange, damage, damageReceived;
+    public float life, lifeMax, lifeMin, armor, attackRange, damage, damageReceived;
 
     public bool canSpeak, dead;
-    public int suspendendAttacK;
 
     public List<GameObject> target = new List<GameObject>();
 
-    public Vector3 myPosition;
-
     public NPCs npcs;
-    public Skeletons skeletons;
     public Orc orc;
 
     // Inizializzazione delle caratteristiche dell'alleato
@@ -23,7 +18,6 @@ public class Allies : MonoBehaviour
     {
         dead = false;
         canSpeak = true;
-        suspendendAttacK = 0;
         life = lifeMax;
 
         // Avvia la coroutine di attacco
@@ -73,17 +67,43 @@ public class Allies : MonoBehaviour
     // Gestisce i messaggi pronunciati dall'alleato
     public void CanTalk()
     {
-        if (!dead && canSpeak && target != null && !skeletons.defeatedSkeletons)
+        if (dead || !canSpeak || npcs == null) return;
+
+        // Controlla se tutti gli scheletri sono stati sconfitti
+        bool allSkeletonsDefeated = npcs.skeletonDefeatedCount >= npcs.skeletonsToSpawn;
+
+        if (!allSkeletonsDefeated)
         {
-            Debug.Log("Eccoli! Arrivano da + " + npcs.spawnPos);
+            string direction = "";
+
+            switch (npcs.spawnPos)
+            {
+                case 1:
+                    direction = "davanti";
+                    break;
+
+                case 2:
+                    direction = "dietro";
+                    break;
+
+                case 3:
+                    direction = "a destra";
+                    break;
+
+                case 4:
+                    direction = "a sinistra";
+                    break;
+            }
+
+            Debug.Log("Nano: Eccoli! Arrivano da " + direction + "!");
         }
-        else if (!dead && canSpeak && target != null && !orc.defeatedOrc)
+        else if (npcs.orcSpawned && orc != null && !orc.defeatedOrc)
         {
-            Debug.Log("Fai attenzione e sii veloce o morirai!!!");
+            Debug.Log("Nano: Fai attenzione e sii veloce o morirai!!!");
         }
-        else if (skeletons.defeatedSkeletons && orc.defeatedOrc)
+        else if (npcs.orcSpawned && orc != null && orc.defeatedOrc)
         {
-            Debug.Log("Che bello abbiamo sconfitto tutti i nemici!");
+            Debug.Log("Nano: Che bello abbiamo sconfitto tutti i nemici!");
         }
     }
 }

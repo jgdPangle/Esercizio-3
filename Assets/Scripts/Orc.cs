@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using System.Collections;
 
@@ -7,10 +6,9 @@ public class Orc : Enemies
     [SerializeField]
     float speed, distance, minimumDistance;
 
-    public bool defeatedOrc, attacking;
+    public bool defeatedOrc;
 
     NPCs npcs;
-    Player player;
 
     // Inizializzazione delle caratteristiche dell'Orco
     protected override void Start()
@@ -67,7 +65,6 @@ public class Orc : Enemies
     // Imposta il giocatore come bersaglio dell'Orco
     public void SetTargetMovement(Player targetMovement)
     {
-        player = targetMovement;
         target = targetMovement.gameObject;
     }
 
@@ -129,7 +126,7 @@ public class Orc : Enemies
                 }
             }
 
-            // Attende 3 secondi prima del controllo successivo
+            // Attende 0.5 secondi prima del controllo successivo
             yield return new WaitForSeconds(0.5f);
         }
     }
@@ -148,9 +145,13 @@ public class Orc : Enemies
             defeatedOrc = true;
             dead = true;
 
+            Debug.Log("ORCO SCONFITTO! HAI VINTO!");
+
+            // Il Nano comunica la vittoria prima della distruzione dell'Orco
+            npcs.dwarf.CanTalk();
+
             Destroy(gameObject);
 
-            Debug.Log("ORCO SCONFITTO! HAI VINTO!");
             npcs.EndGame();
         }
     }

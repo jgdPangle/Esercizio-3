@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class Enemies : MonoBehaviour
 {
-    public float life, lifeMax, lifeMin, _life, armor, attackRange, damage, damageReceived;
+    public float life, lifeMax, lifeMin, armor, attackRange, damage;
 
     public bool dead, incapacitated;
     public GameObject target;
 
     public GameObject alliesTarget;
-
-    public Vector3 myPosition;
 
     protected virtual void Start()
     {

@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using System.Collections;
 
@@ -15,7 +14,6 @@ public class Dwarf : Allies
     {
         lifeMax = 200;
         lifeMin = 0;
-        life = lifeMax;
         attackRange = 6f;
         damage = 5;
         minimumDistance = 1.5f;

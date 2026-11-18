@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -106,18 +105,18 @@ public class Player : MonoBehaviour
     // Gestisce il movimento del giocatore e il suo orientamento
     void Movement()
     {
-        Vector2 movimento = inputActions.Player.Move.ReadValue<Vector2>();
+        Vector2 movement = inputActions.Player.Move.ReadValue<Vector2>();
 
         // Movimento normale del giocatore, quando non sta schivando
         if (!isMoving)
         {
-            transform.position += transform.forward * movimento.y * speed * Time.deltaTime;
-            transform.position += transform.right * movimento.x * speed * Time.deltaTime;
+            transform.position += transform.forward * movement.y * speed * Time.deltaTime;
+            transform.position += transform.right * movement.x * speed * Time.deltaTime;
         }
         // Durante la schivata, lo spostamento viene gestito tramite interpolazione
         else
         {
-            movementProgress += speed * Time.deltaTime / distance;
+            movementProgress += speed * 2f * Time.deltaTime / distance;
             transform.position = Vector3.Lerp(startPosition, targetPosition, movementProgress);
 
             if (movementProgress >= 1)
@@ -161,6 +160,7 @@ public class Player : MonoBehaviour
     {
         startPosition = transform.position;
 
+        distance = distanceDodge;
 
         Vector3 dodgeDirection = playerCamera.transform.forward; // Usa la direzione della telecamera per la schivata
 

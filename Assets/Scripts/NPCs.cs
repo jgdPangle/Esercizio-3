@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCs : MonoBehaviour
 {
     public Player player;
-    Dwarf dwarf;
+    public Dwarf dwarf;
 
     public List<GameObject> Allies;
     public List<GameObject> Enemies;
@@ -13,6 +13,8 @@ public class NPCs : MonoBehaviour
     public GameObject entities;
 
     public int skeletonCount, skeletonDefeatedCount, skeletonsToSpawn;
+
+    public bool orcSpawned = false;
 
     [SerializeField]
     float spawnDistance = 10f;
@@ -34,7 +36,7 @@ public class NPCs : MonoBehaviour
 
         // Generazione del Nano e degli scheletri
         InstantiateNano();
-        InstanSkeletons();
+        InstantSkeletons();
     }
 
     // Istanzia il Nano
@@ -42,19 +44,21 @@ public class NPCs : MonoBehaviour
     {
         GameObject dwarfObject = Instantiate(Allies[0], entities.transform);
         dwarf = dwarfObject.GetComponent<Dwarf>();
+        dwarf.npcs = this;
 
         dwarf.SetTargetMovement(player); // Imposta il riferimento al giocatore per il movimento del Nano
         dwarf.StartHealing();
     }
 
     // Avvia la coroutine per generare gli scheletri
-    public void InstanSkeletons()
+    public void InstantSkeletons()
     {
         StartCoroutine(InstantiateSkeletons());
     }
 
     IEnumerator InstantiateSkeletons()
     {
+        yield return null;
         // Definisce le quattro direzioni di generazione rispetto al giocatore
         directions = new Vector3[]{-player.transform.forward, player.transform.forward, -player.transform.right, player.transform.right};
 
@@ -82,23 +86,21 @@ public class NPCs : MonoBehaviour
             if (directionIndex == 0)
             {
                 spawnPos = 1;
-                Debug.Log("I nemici arrivano da davanti!");
             }
             else if (directionIndex == 1)
             {
                 spawnPos = 2;
-                Debug.Log("I nemici arrivano da dietro!");
             }
             else if (directionIndex == 2)
             {
                 spawnPos = 3;
-                Debug.Log("I nemici arrivano da destra!");
             }
             else if (directionIndex == 3)
             {
                 spawnPos = 4;
-                Debug.Log("I nemici arrivano da sinistra!");
             }
+
+            dwarf.CanTalk();
 
             yield return new WaitForSeconds(3f);
         }
@@ -116,8 +118,16 @@ public class NPCs : MonoBehaviour
         orcScript.SetAllyTarget(dwarf.gameObject);
         orcScript.SetNPCs(this);
 
+        // Assegna al Nano il riferimento all'Orco generato
+        dwarf.orc = orcScript;
+
+        orcSpawned = true;
+
         // Aggiunge l'Orco ai bersagli del Nano
         dwarf.AddTarget(orco);
+
+        // Il Nano commenta l'arrivo dell'Orco
+        dwarf.CanTalk();
     }
 
     // Gestisce la fine della partita
